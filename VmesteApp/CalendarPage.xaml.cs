@@ -16,15 +16,13 @@ using System.Windows.Shapes;
 namespace VmesteApp
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для CalendarPage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class CalendarPage : Page
     {
-        public MainWindow()
+        public CalendarPage()
         {
             InitializeComponent();
-            RootFrame.Navigate(new LoginPage());
         }
-
     }
 }

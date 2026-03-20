@@ -16,15 +16,19 @@ using System.Windows.Shapes;
 namespace VmesteApp
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для LoginPage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class LoginPage : Page
     {
-        public MainWindow()
+        public LoginPage()
         {
             InitializeComponent();
-            RootFrame.Navigate(new LoginPage());
         }
 
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = (MainWindow)Window.GetWindow(this);
+            mainWindow.RootFrame.Navigate(new MainPage());
+        }
     }
 }

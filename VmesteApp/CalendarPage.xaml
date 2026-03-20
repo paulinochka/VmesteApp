@@ -1,0 +1,91 @@
+﻿<Page x:Class="VmesteApp.CalendarPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Календарь">
+
+    <Grid Background="Transparent">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="30,0,30,30">
+            <StackPanel MaxWidth="1000" HorizontalAlignment="Stretch">
+
+                <TextBlock Text="Календарь событий" FontSize="28" FontWeight="Bold" 
+                           Foreground="#333333" Margin="0,0,0,20"/>
+
+                <Border Background="White" CornerRadius="15" Padding="20" 
+                        BorderBrush="#E0E0E0" BorderThickness="1" Margin="0,0,0,25">
+                    <Calendar x:Name="MainCalendar" HorizontalAlignment="Stretch" BorderThickness="0" 
+                              FontSize="16" SelectionMode="SingleDate"/>
+                </Border>
+
+                <Border Background="White" CornerRadius="15" Padding="35" 
+                        BorderBrush="#E0E0E0" BorderThickness="1">
+                    <StackPanel>
+                        <TextBlock Text="Новое событие" FontSize="20" FontWeight="Bold" 
+                                   Foreground="#333333" Margin="0,0,0,25"/>
+
+                        <UniformGrid Columns="2">
+                            <StackPanel Margin="0,0,15,0">
+                                <TextBlock Text="Название" FontSize="12" Foreground="#999" Margin="0,0,0,5"/>
+                                <TextBox x:Name="TitleBox" Padding="10" BorderBrush="#DDD"/>
+                            </StackPanel>
+
+                            <StackPanel Margin="15,0,0,0">
+                                <TextBlock Text="Категория" FontSize="12" Foreground="#999" Margin="0,0,0,5"/>
+                                <ComboBox x:Name="CategoryBox" BorderBrush="#DDD">
+                                    <ComboBoxItem Content="Семья"/>
+                                    <ComboBoxItem Content="Работа"/>
+                                    <ComboBoxItem Content="Личное"/>
+                                    <ComboBoxItem Content="Путешествие"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </UniformGrid>
+
+                        <StackPanel Margin="0,20,0,0">
+                            <TextBlock Text="Описание" FontSize="12" Foreground="#999" Margin="0,0,0,5"/>
+                            <TextBox x:Name="DescriptionBox" Height="80" TextWrapping="Wrap" AcceptsReturn="True" 
+                                     Padding="10" BorderBrush="#DDD" VerticalScrollBarVisibility="Auto"/>
+                        </StackPanel>
+
+                        <UniformGrid Columns="2" Margin="0,20,0,0">
+                            <StackPanel Margin="0,0,15,0">
+                                <TextBlock Text="Дата" FontSize="12" Foreground="#999" Margin="0,0,0,5"/>
+                                <DatePicker x:Name="EventDatePicker" Padding="5" BorderBrush="#DDD"/>
+                            </StackPanel>
+
+                            <StackPanel Margin="15,0,0,0">
+                                <TextBlock Text="Время" FontSize="12" Foreground="#999" Margin="0,0,0,5"/>
+                                <TextBox x:Name="TimeBox" Text="12:00" Padding="10" BorderBrush="#DDD" ToolTip="Формат ЧЧ:ММ"/>
+                            </StackPanel>
+                        </UniformGrid>
+
+                        <CheckBox x:Name="IsPrivateCheck" Content="Личное событие (скрыть от семьи)" 
+                                  Margin="0,25,0,0" FontSize="14" Foreground="#333"/>
+
+                        <Button Content="Добавить в календарь" 
+                                Margin="0,30,0,0" Height="45" Width="250"
+                                Background="#333333" Foreground="White" 
+                                FontSize="14" FontWeight="Bold" HorizontalAlignment="Right" Cursor="Hand">
+                            <Button.Resources>
+                                <Style TargetType="Button">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border x:Name="btnBorder" Background="{TemplateBinding Background}" CornerRadius="8">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="btnBorder" Property="Background" Value="#555555"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>
