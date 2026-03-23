@@ -30,13 +30,18 @@
                         <PasswordBox x:Name="PassBox" Margin="0,0,0,12"/>
 
                         <TextBlock Text="Роль в семье" FontSize="12" Foreground="#999" Margin="5,0,0,5"/>
-                        <ComboBox x:Name="RoleComboBox" Margin="0,0,0,12">
+                        <ComboBox x:Name="RoleComboBox" 
+                                  WindowChrome.IsHitTestVisibleInChrome="True" 
+                                  Margin="0,0,0,20"
+                                  SelectionChanged="RoleComboBox_SelectionChanged">
                             <ComboBoxItem Content="Глава семьи"/>
-                            <ComboBoxItem Content="Член семьи"/>
+                            <ComboBoxItem Content="Участник семьи"/>
                         </ComboBox>
 
-                        <TextBlock Text="Код семьи (если есть)" FontSize="12" Foreground="#999" Margin="5,0,0,5"/>
-                        <TextBox x:Name="FamilyCodeBox" Margin="0,0,0,20"/>
+                        <StackPanel x:Name="FamilyCodeGroup" Visibility="Collapsed">
+                            <TextBlock Text="Код семьи (если есть)" FontSize="12" Foreground="#999" Margin="5,-8,0,5"/>
+                            <TextBox x:Name="FamilyCodeBox" Margin="0,0,0,20"/>
+                        </StackPanel>
 
                         <Button Name="RegisterButton"
                             Content="Создать аккаунт" 

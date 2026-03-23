@@ -9,9 +9,12 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VmesteApp.DB.Models;
+using VmesteApp.DB.Repository;
 
 namespace VmesteApp
 {
@@ -27,8 +30,32 @@ namespace VmesteApp
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            var mainWindow = (MainWindow)Window.GetWindow(this);
-            mainWindow.RootFrame.Navigate(new MainPage());
+            string identifier = LoginBox.Text.Trim();
+            string password = PassBox.Password;
+
+            if (string.IsNullOrEmpty(identifier) || string.IsNullOrEmpty(password))
+            {
+                CustomMessageBox.Show("Пожалуйста, заполните все поля.", "Ошибка");
+                return;
+            }
+
+            UserRepository repo = new UserRepository();
+            Users authenticatedUser = repo.Login(identifier, password);
+
+            if (authenticatedUser != null)
+            {
+                // Сохраняем данные пользователя (например, в статический класс или свойство окна)
+                // чтобы приложение знало, кто вошел
+                App.CurrentUser = authenticatedUser;
+
+                CustomMessageBox.Show($"Добро пожаловать, {authenticatedUser.name}!", "Успех");
+
+                NavigationService.Navigate(new MainPage());
+            }
+            else
+            {
+                CustomMessageBox.Show("Неверная почта/телефон или пароль.", "Ошибка");
+            }
         }
 
         private void RegisterButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

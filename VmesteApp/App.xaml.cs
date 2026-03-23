@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using VmesteApp.DB.Models;
 
 namespace VmesteApp
 {
@@ -13,5 +14,6 @@ namespace VmesteApp
     /// </summary>
     public partial class App : Application
     {
+        public static Users CurrentUser { get; set; }
     }
 }

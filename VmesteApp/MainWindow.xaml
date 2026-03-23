@@ -8,6 +8,13 @@
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="40" CornerRadius="15" GlassFrameThickness="0"/>
     </WindowChrome.WindowChrome>
+    <Grid>
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
 
-    <Frame x:Name="RootFrame" NavigationUIVisibility="Hidden"/>
+        <Grid x:Name="Overlay" 
+          Background="Black" 
+          Opacity="0.5" 
+          Visibility="Collapsed"/>
+    </Grid>
+
 </Window>

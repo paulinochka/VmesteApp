@@ -1,0 +1,25 @@
+﻿<Window x:Class="VmesteApp.CustomMessageBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Уведомление" Height="180" Width="350"
+        WindowStyle="None" AllowsTransparency="True" 
+        Background="Transparent" WindowStartupLocation="CenterScreen">
+    
+    <Border Background="White" CornerRadius="15" BorderBrush="#E0E0E0" BorderThickness="1">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Name="txtTitle" Text="Заголовок" FontWeight="Bold" FontSize="20" Foreground="#333"/>
+            
+            <TextBlock Name="txtMessage" Grid.Row="1" Text="Сообщение..." TextWrapping="Wrap" 
+                       VerticalAlignment="Center" Margin="0,10" Foreground="#666" FontSize="16"/>
+
+            <Button Grid.Row="2" Content="ОК" Width="100" HorizontalAlignment="Right"
+                    Style="{StaticResource MainButtonStyle}" Click="Ok_Click"/>
+        </Grid>
+    </Border>
+</Window>
