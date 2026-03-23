@@ -46,9 +46,9 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,10,0">
-                    <Button Content="—" Style="{StaticResource ControlButtonStyle}"/>
-                    <Button Content="✕" Style="{StaticResource CloseButtonStyle}"/>
+                <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,10,0" WindowChrome.IsHitTestVisibleInChrome="True">
+                    <Button Name="MinimizeButton" Content="—" Style="{StaticResource MinimazeButtonStyle}" Click="MinimizeButton_Click"/>
+                    <Button Name="CloseButton" Content="✕" Style="{StaticResource CloseButtonStyle}" Click="CloseButton_Click"/>
                 </StackPanel>
 
                 <TextBlock Grid.Row="0" Text="ВМЕСТЕ" HorizontalAlignment="Center" VerticalAlignment="Center" 

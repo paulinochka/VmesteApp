@@ -49,5 +49,15 @@ namespace VmesteApp
         {
             InnerFrame.Navigate(new ProfilePage());
         }
+
+        private void MinimizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            Window.GetWindow(this).WindowState = WindowState.Minimized;
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }

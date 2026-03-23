@@ -249,6 +249,15 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+    
+    <Style x:Key="MinimazeButtonStyle" TargetType="Button" BasedOn="{StaticResource ControlButtonStyle}">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Background" Value="#5D6D7E"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 
     <Style x:Key="ExitButtonStyle" TargetType="Button">
         <Setter Property="Background" Value="Transparent"/>

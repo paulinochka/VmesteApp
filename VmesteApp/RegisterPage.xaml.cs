@@ -16,33 +16,28 @@ using System.Windows.Shapes;
 namespace VmesteApp
 {
     /// <summary>
-    /// Логика взаимодействия для LoginPage.xaml
+    /// Логика взаимодействия для RegisterPage.xaml
     /// </summary>
-    public partial class LoginPage : Page
+    public partial class RegisterPage : Page
     {
-        public LoginPage()
+        public RegisterPage()
         {
             InitializeComponent();
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private void ReturnButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var mainWindow = (MainWindow)Window.GetWindow(this);
-            mainWindow.RootFrame.Navigate(new MainPage());
+            NavigationService.Navigate(new LoginPage());
         }
 
-        private void RegisterButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new RegisterPage());
+            NavigationService.Navigate(new LoginPage());
         }
 
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
         {
-            var window = Window.GetWindow(this);
-            if (window != null)
-            {
-                window.WindowState = WindowState.Minimized;
-            }
+            Window.GetWindow(this).WindowState = WindowState.Minimized;
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
