@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Уведомление" Height="180" Width="350"
         WindowStyle="None" AllowsTransparency="True" 
+        SizeToContent="WidthAndHeight"
         Background="Transparent" WindowStartupLocation="CenterScreen">
     
     <Border Background="White" CornerRadius="15" BorderBrush="#E0E0E0" BorderThickness="1">

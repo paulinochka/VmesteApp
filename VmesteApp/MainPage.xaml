@@ -19,14 +19,20 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,10,0,40">
-                        <Ellipse Width="50" Height="50">
-                            <Ellipse.Fill>
-                                <ImageBrush ImageSource="/Images/avatar.jpg" Stretch="UniformToFill"/>
-                            </Ellipse.Fill>
-                        </Ellipse>
+                        <Border Width="50" Height="50" 
+                                CornerRadius="25" 
+                                Background="White" 
+                                BorderBrush="#E0E0E0" 
+                                BorderThickness="1"
+                                Padding="8">
+                                <Image Source="/Avatars/nophoto.png" 
+                                   Stretch="Uniform" 
+                                   HorizontalAlignment="Center" 
+                                   VerticalAlignment="Center"/> 
+                        </Border>
                         <StackPanel VerticalAlignment="Center" Margin="15,0,0,0">
-                            <TextBlock Text="Полина" FontWeight="SemiBold" FontSize="16" Foreground="#333333"/>
-                            <TextBlock Text="Глава семьи" FontSize="12" Foreground="#888888"/>
+                            <TextBlock x:Name="UserNameTextBlock" Text="Имя" FontWeight="SemiBold" FontSize="16" Foreground="#333333"/>
+                            <TextBlock x:Name="UserRoleTextBlock" Text="Роль" FontSize="12" Foreground="#888888"/>
                         </StackPanel>
                     </StackPanel>
 

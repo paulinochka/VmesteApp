@@ -24,7 +24,10 @@
                         <TextBox x:Name="EmailBox" Margin="0,0,0,12"/>
 
                         <TextBlock Text="Телефон" FontSize="12" Foreground="#999" Margin="5,0,0,5"/>
-                        <TextBox x:Name="PhoneBox" Margin="0,0,0,12"/>
+                        <TextBox x:Name="PhoneBox" 
+                                 Margin="0,0,0,12"
+                                 GotFocus="PhoneBox_GotFocus"
+                                 TextChanged="PhoneBox_TextChanged"/>
 
                         <TextBlock Text="Пароль" FontSize="12" Foreground="#999" Margin="5,0,0,5"/>
                         <PasswordBox x:Name="PassBox" Margin="0,0,0,12"/>
@@ -39,7 +42,7 @@
                         </ComboBox>
 
                         <StackPanel x:Name="FamilyCodeGroup" Visibility="Collapsed">
-                            <TextBlock Text="Код семьи (если есть)" FontSize="12" Foreground="#999" Margin="5,-8,0,5"/>
+                            <TextBlock Text="Код семьи" FontSize="12" Foreground="#999" Margin="5,-8,0,5"/>
                             <TextBox x:Name="FamilyCodeBox" Margin="0,0,0,20"/>
                         </StackPanel>
 

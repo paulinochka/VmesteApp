@@ -24,27 +24,40 @@ namespace VmesteApp
         {
             InitializeComponent();
             InnerFrame.Navigate(new HomePage());
+
+            LoadUserData();
+        }
+
+        private void LoadUserData()
+        {
+            // Проверяем, авторизован ли пользователь
+            if (App.CurrentUser != null)
+            {
+                // Подставляем данные из статического свойства App
+                UserNameTextBlock.Text = App.CurrentUser.name;
+                UserRoleTextBlock.Text = App.CurrentUser.role;
+            }
+            else
+            {
+                NavigationService.Navigate(new LoginPage());
+            }
         }
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
+            App.CurrentUser = null;
             NavigationService.Navigate(new LoginPage());
         }
-
-        // Метод для перехода на Главную
         private void HomePageButton_Click(object sender, RoutedEventArgs e)
         {
-            // Замени HomePage на название твоей страницы главной
             InnerFrame.Navigate(new HomePage());
         }
 
-        // Метод для перехода в Календарь
         private void CalendarButton_Click(object sender, RoutedEventArgs e)
         {
             InnerFrame.Navigate(new CalendarPage());
         }
 
-        // Метод для перехода в Личный кабинет
         private void ProfileButton_Click(object sender, RoutedEventArgs e)
         {
             InnerFrame.Navigate(new ProfilePage());

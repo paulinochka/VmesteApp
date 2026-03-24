@@ -21,20 +21,20 @@
                             </Grid.ColumnDefinitions>
 
                             <Grid Width="100" Height="100" Cursor="Hand" ToolTip="Нажмите, чтобы сменить фото">
-                                <Border x:Name="AvatarBorder" CornerRadius="50" BorderBrush="#D0D0D0" BorderThickness="1">
-                                    <Border.Style>
-                                        <Style TargetType="Border">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Grid}}" Value="True">
-                                                    <Setter Property="BorderBrush" Value="#333333"/>
-                                                    <Setter Property="BorderThickness" Value="2"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Border.Style>
-                                    <Border.Background>
-                                        <ImageBrush ImageSource="/Images/avatar.jpg" Stretch="UniformToFill"/>
-                                    </Border.Background>
+                                <Border x:Name="AvatarBorder" CornerRadius="50" Padding="0" BorderBrush="#D0D0D0" BorderThickness="1">
+                                    <Image x:Name="AvatarImage" 
+                                           Source="/Avatars/nophoto.png" 
+                                           Stretch="UniformToFill" 
+                                           HorizontalAlignment="Center" 
+                                           VerticalAlignment="Center">
+                                        <Image.OpacityMask>
+                                            <VisualBrush>
+                                                <VisualBrush.Visual>
+                                                    <Ellipse Width="100" Height="100" Fill="Black"/>
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </Image.OpacityMask>
+                                    </Image>
                                 </Border>
 
                                 <Border x:Name="HoverOverlay" CornerRadius="50" Background="#99000000" IsHitTestVisible="False">
@@ -54,7 +54,7 @@
                             </Grid>
 
                             <StackPanel Grid.Column="1" Margin="25,0,0,0" VerticalAlignment="Center">
-                                <TextBox x:Name="UserNameTextBox" Text="Полина" 
+                                <TextBox x:Name="UserNameTextBox" Text="Имя" 
                                          FontSize="22" FontWeight="SemiBold" 
                                          Foreground="#333333" Background="Transparent" 
                                          BorderThickness="0" Padding="5" Cursor="IBeam">
@@ -68,7 +68,9 @@
                                         </Style>
                                     </TextBox.Style>
                                 </TextBox>
-                                <TextBlock Text="Глава семьи" FontSize="15" Foreground="#5D6D7E" Margin="5,5,0,0" FontWeight="Medium"/>
+                                <TextBlock x:Name="UserRoleTextBlock" 
+                                           Text="Роль" FontSize="15" Foreground="#5D6D7E" 
+                                           Margin="5,5,0,0" FontWeight="Medium"/>
                             </StackPanel>
                         </Grid>
 
@@ -77,25 +79,31 @@
                         <UniformGrid Columns="2">
                             <StackPanel Margin="0,0,20,0">
                                 <TextBlock Text="Электронная почта" FontSize="12" Foreground="#999" Margin="5,0,0,8"/>
-                                <TextBox Text="katya_dev@mail.ru" Margin="0,0,0,25"/>
+                                <TextBox x:Name="UserEmailTextBox" Text="example@mail.com" Margin="0,0,0,25"/>
 
                                 <TextBlock Text="Номер телефона" FontSize="12" Foreground="#999" Margin="5,0,0,8"/>
-                                <TextBox Text="+7 (999) 000-00-00" Margin="0,0,0,25"/>
+                                <TextBox x:Name="UserPhoneTextBox" 
+                                         Text="+7 (999) 000-00-00" 
+                                         Margin="0,0,0,25"
+                                         GotFocus="UserPhoneTextBox_GotFocus"
+                                         TextChanged="UserPhoneTextBox_TextChanged"/>
                             </StackPanel>
 
                             <StackPanel Margin="20,0,0,0">
-                                <TextBlock Text="ID Семьи" FontSize="12" Foreground="#999" Margin="5,0,0,8"/>
-                                <TextBox Text="FAM-77A2-B9" IsReadOnly="True" IsEnabled="False" Margin="0,0,0,25"/>
+                                <TextBlock Text="Код семьи" FontSize="12" Foreground="#999" Margin="5,0,0,8"/>
+                                <TextBox x:Name="FamilyIdTextBox" Text="FAM-77A2-B9" IsReadOnly="True" IsEnabled="False" Margin="0,0,0,25"/>
 
                                 <TextBlock Text="Новый пароль" FontSize="12" Foreground="#999" Margin="5,0,0,8"/>
-                                <PasswordBox Password="password" Margin="0,0,0,25"/>
+                                <PasswordBox x:Name="NewPasswordBox" Password="newpassword" Margin="0,0,0,25"/>
                             </StackPanel>
                         </UniformGrid>
 
-                        <Button Content="Сохранить изменения" 
+                        <Button x:Name="SaveButton"
+                                Content="Сохранить изменения" 
                                 Style="{StaticResource MainButtonStyle}"
                                 HorizontalAlignment="Center" 
-                                Margin="0,20,0,0"/>
+                                Margin="0,20,0,0"
+                                Click="SaveButton_Click"/>
 
                     </StackPanel>
                 </Border>

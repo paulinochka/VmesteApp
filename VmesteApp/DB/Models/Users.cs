@@ -15,5 +15,7 @@ namespace VmesteApp.DB.Models
         public string password { get; set; }
         public string role { get; set; }
         public int? familyId { get; set; }
+        public string familyInviteCode { get; set; }
+        public string avatarPath { get; set; }
     }
 }
