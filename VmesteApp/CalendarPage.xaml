@@ -61,6 +61,7 @@
                                   Margin="0,25,0,0" FontSize="14" Foreground="#333"/>
 
                         <Button Content="Добавить в календарь" 
+                                Click="AddEventButton_Click"
                                 Margin="0,30,0,0" Height="45" Width="250"
                                 Background="#333333" Foreground="White" 
                                 FontSize="14" FontWeight="Bold" HorizontalAlignment="Right" Cursor="Hand">

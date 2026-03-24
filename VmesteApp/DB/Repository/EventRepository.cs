@@ -17,10 +17,10 @@ namespace VmesteApp.DB.Repository
             {
                 conn.Open();
                 // Логика: выбираем все публичные события семьи ИЛИ приватные события текущего пользователя
-                string sql = @"SELECT * FROM events 
-                               WHERE familyid = @fid 
-                               AND (isprivate = false OR userid = @uid)
-                               ORDER BY eventdate, eventtime";
+                string sql = @"SELECT * FROM ""VmesteDB"".events 
+                               WHERE family_id = @fid 
+                               AND (is_private = false OR user_id = @uid)
+                               ORDER BY event_date, event_time";
 
                 using (var cmd = new NpgsqlCommand(sql, conn))
                 {
@@ -33,15 +33,15 @@ namespace VmesteApp.DB.Repository
                         {
                             eventsList.Add(new Events
                             {
-                                eventId = (int)reader["eventid"],
-                                familyId = (int)reader["familyid"],
-                                userId = (int)reader["userid"],
-                                name = reader["name"].ToString(),
+                                eventId = (int)reader["event_id"],
+                                familyId = (int)reader["family_id"],
+                                userId = (int)reader["user_id"],
+                                name = reader["title"].ToString(),
                                 description = reader["description"]?.ToString(),
-                                eventDate = (DateTime)reader["eventdate"],
-                                eventTime = (DateTime)reader["eventtime"],
+                                eventDate = (DateTime)reader["event_date"],
+                                eventTime = (DateTime)reader["event_time"],
                                 category = reader["category"]?.ToString(),
-                                isPrivate = (bool)reader["isprivate"]
+                                isPrivate = (bool)reader["is_private"]
                             });
                         }
                     }
@@ -56,7 +56,8 @@ namespace VmesteApp.DB.Repository
             using (var conn = DbConnection.GetConnection())
             {
                 conn.Open();
-                string sql = @"INSERT INTO events (familyid, userid, name, description, eventdate, eventtime, category, isprivate) 
+                string sql = @"INSERT INTO ""VmesteDB"".events (family_id, user_id, title, 
+                            description, event_date, event_time, category, is_private) 
                                VALUES (@fid, @uid, @name, @desc, @edate, @etime, @cat, @priv)";
 
                 using (var cmd = new NpgsqlCommand(sql, conn))
@@ -81,7 +82,7 @@ namespace VmesteApp.DB.Repository
             using (var conn = DbConnection.GetConnection())
             {
                 conn.Open();
-                string sql = "DELETE FROM events WHERE eventid = @eid AND userid = @uid";
+                string sql = "DELETE FROM \"VmesteDB\".events WHERE event_id = @eid AND user_id = @uid";
                 using (var cmd = new NpgsqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("eid", eventId);
