@@ -7,7 +7,8 @@
         <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="30,0,30,30">
             <StackPanel MaxWidth="1000" HorizontalAlignment="Stretch">
 
-                <TextBlock Text="Добрый день, Полина!" FontSize="28" FontWeight="Bold" 
+                <!-- Добавлено x:Name для программного изменения имени -->
+                <TextBlock x:Name="WelcomeText" Text="Добрый день, Полина!" FontSize="28" FontWeight="Bold" 
                            Foreground="#333333" Margin="0,0,0,20"/>
 
                 <Grid>
@@ -16,8 +17,9 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
+                    <!-- ЛЕВАЯ КАРТОЧКА: ЗАДАЧИ -->
                     <Border Grid.Column="0" Background="White" CornerRadius="15" Padding="30" 
-        BorderBrush="#E0E0E0" BorderThickness="1" Margin="0,0,15,0" MinHeight="400">
+                            BorderBrush="#E0E0E0" BorderThickness="1" Margin="0,0,15,0" MinHeight="400">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -30,17 +32,19 @@
                                 <TextBlock Text="📝" HorizontalAlignment="Right" FontSize="20"/>
                             </Grid>
 
-                            <StackPanel Grid.Row="1" VerticalAlignment="Top">
-                                <CheckBox Content="Купить билеты до Дубая" Margin="0,0,0,15" FontSize="15" IsChecked="True"/>
-                                <CheckBox Content="Забронировать отель в Таиланде" Margin="0,0,0,15" FontSize="15"/>
-                                <CheckBox Content="Обменять валюту" Margin="0,0,0,15" FontSize="15"/>
-                                <CheckBox Content="Проверить сроки паспортов" Margin="0,0,0,15" FontSize="15"/>
-                            </StackPanel>
+                            <!-- Заменяем статические CheckBox на ItemsControl -->
+                            <ItemsControl x:Name="TasksList" Grid.Row="1" VerticalAlignment="Top">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <!-- Используем TextBlock вместо CheckBox по вашему запросу -->
+                                        <TextBlock Text="{Binding TaskName}" Margin="0,0,0,15" FontSize="15" Foreground="#333333"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
 
                             <Button Grid.Row="2" Content="+ Добавить задачу" 
-                Margin="0,20,0,0" 
-                Foreground="#7F8C8D" FontSize="14" FontWeight="Medium"
-                HorizontalAlignment="Left" Cursor="Hand">
+                                    Margin="0,20,0,0" Foreground="#7F8C8D" FontSize="14" FontWeight="Medium"
+                                    HorizontalAlignment="Left" Cursor="Hand" Click="ToCalendarPage_Click">
                                 <Button.Style>
                                     <Style TargetType="Button">
                                         <Setter Property="Background" Value="Transparent"/>
@@ -49,10 +53,7 @@
                                         <Setter Property="Template">
                                             <Setter.Value>
                                                 <ControlTemplate TargetType="Button">
-                                                    <Border x:Name="border" 
-                                        Background="{TemplateBinding Background}" 
-                                        CornerRadius="5" 
-                                        Padding="{TemplateBinding Padding}">
+                                                    <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="5" Padding="{TemplateBinding Padding}">
                                                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                     </Border>
                                                     <ControlTemplate.Triggers>
@@ -70,6 +71,7 @@
                         </Grid>
                     </Border>
 
+                    <!-- ПРАВАЯ КАРТОЧКА: СОБЫТИЯ -->
                     <Border Grid.Column="1" Background="White" CornerRadius="15" Padding="30" 
                             BorderBrush="#E0E0E0" BorderThickness="1" Margin="15,0,0,0">
                         <StackPanel>
@@ -78,39 +80,27 @@
                                 <TextBlock Text="📅" HorizontalAlignment="Right" FontSize="20"/>
                             </Grid>
 
-                            <Border Background="#F9F9F9" CornerRadius="10" Padding="15" Margin="0,0,0,15">
-                                <Grid>
-                                    <StackPanel>
-                                        <TextBlock Text="Перелет в Дубай" FontWeight="SemiBold" FontSize="14" Foreground="#333"/>
-                                        <TextBlock Text="29 июня, 14:20" FontSize="12" Foreground="#7F8C8D" Margin="0,3,0,0"/>
-                                    </StackPanel>
-                                    <TextBlock Text="✈️" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="18"/>
-                                </Grid>
-                            </Border>
-
-                            <Border Background="#F9F9F9" CornerRadius="10" Padding="15" Margin="0,0,0,15">
-                                <Grid>
-                                    <StackPanel>
-                                        <TextBlock Text="Прибытие в Дананг" FontWeight="SemiBold" FontSize="14" Foreground="#333"/>
-                                        <TextBlock Text="1 июля, 09:00" FontSize="12" Foreground="#7F8C8D" Margin="0,3,0,0"/>
-                                    </StackPanel>
-                                    <TextBlock Text="🏠" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="18"/>
-                                </Grid>
-                            </Border>
-
-                            <Border Background="#F9F9F9" CornerRadius="10" Padding="15">
-                                <Grid>
-                                    <StackPanel>
-                                        <TextBlock Text="Встреча с программистами" FontWeight="SemiBold" FontSize="14" Foreground="#333"/>
-                                        <TextBlock Text="5 июля, 19:00" FontSize="12" Foreground="#7F8C8D" Margin="0,3,0,0"/>
-                                    </StackPanel>
-                                    <TextBlock Text="💻" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="18"/>
-                                </Grid>
-                            </Border>
+                            <!-- Заменяем статические Border на ItemsControl -->
+                            <ItemsControl x:Name="EventsList">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Background="#F9F9F9" CornerRadius="10" Padding="15" Margin="0,0,0,15">
+                                            <Grid>
+                                                <StackPanel>
+                                                    <!-- Привязка к названию и дате -->
+                                                    <TextBlock Text="{Binding Title}" FontWeight="SemiBold" FontSize="14" Foreground="#333"/>
+                                                    <TextBlock Text="{Binding DateTimeString}" FontSize="12" Foreground="#7F8C8D" Margin="0,3,0,0"/>
+                                                </StackPanel>
+                                                <!-- Привязка к иконке (эмодзи) -->
+                                                <TextBlock Text="{Binding Icon}" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="18"/>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                         </StackPanel>
                     </Border>
                 </Grid>
-
             </StackPanel>
         </ScrollViewer>
     </Grid>

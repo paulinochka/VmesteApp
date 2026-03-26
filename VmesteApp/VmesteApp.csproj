@@ -90,6 +90,9 @@
     <Compile Include="CustomMessageBox.xaml.cs">
       <DependentUpon>CustomMessageBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomMessageBoxYesNo.xaml.cs">
+      <DependentUpon>CustomMessageBoxYesNo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DB\DbConnection.cs" />
     <Compile Include="DB\Models\Events.cs" />
     <Compile Include="DB\Models\Families.cs" />
@@ -97,15 +100,22 @@
     <Compile Include="DB\Repository\EventRepository.cs" />
     <Compile Include="DB\Repository\FamilyRepository.cs" />
     <Compile Include="DB\Repository\UserRepository.cs" />
+    <Compile Include="EventsModels\EventItem.cs" />
+    <Compile Include="EventsModels\TaskItem.cs" />
     <Compile Include="RegisterPage.xaml.cs">
       <DependentUpon>RegisterPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RegistrationValidator.cs" />
     <Compile Include="Security\PasswordHasher.cs" />
     <Page Include="CalendarPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CustomMessageBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomMessageBoxYesNo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

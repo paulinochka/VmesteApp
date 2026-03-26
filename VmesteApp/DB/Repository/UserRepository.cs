@@ -130,6 +130,44 @@ namespace VmesteApp.DB.Repository
                 }
             }
         }
+
+        public Users GetUserById(int id)
+        {
+            using (var conn = DbConnection.GetConnection())
+            {
+                conn.Open();
+                // Используем LEFT JOIN, чтобы подтянуть invite_code из таблицы families
+                string sql = @"
+            SELECT u.*, f.invite_code 
+            FROM ""VmesteDB"".users u
+            LEFT JOIN ""VmesteDB"".families f ON u.family_id = f.family_id
+            WHERE u.user_id = @id";
+
+                using (var cmd = new NpgsqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("id", id);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new Users
+                            {
+                                userId = (int)reader["user_id"],
+                                name = reader["full_name"].ToString(),
+                                email = reader["email"].ToString(),
+                                phone = reader["phone"] as string,
+                                password = reader["password_hash"]?.ToString(), // обычно хранится как hash
+                                role = reader["user_role"].ToString(),
+                                familyId = reader["family_id"] as int?,
+                                familyInviteCode = reader["invite_code"]?.ToString() ?? "Нет кода",
+                                avatarPath = reader["avatar_path"] as string
+                            };
+                        }
+                    }
+                }
+            }
+            return null;
+        }
         public Users Login(string identifier, string password)
         {
             string hashedPassword = PasswordHasher.HashPassword(password);

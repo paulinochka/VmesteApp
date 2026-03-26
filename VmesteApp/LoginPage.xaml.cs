@@ -28,6 +28,31 @@ namespace VmesteApp
             InitializeComponent();
         }
 
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            int lastId = Properties.Settings.Default.LastUserId;
+            string lastName = Properties.Settings.Default.LastUserName;
+
+            if (lastId != -1 && !string.IsNullOrEmpty(lastName))
+            {
+                bool res = CustomMessageBoxYesNo.Show($"Последний раз сюда заходил {lastName}. " +
+                    $"Зайти под этим аккаунтом?", "Быстрый вход");
+
+                if (res)
+                {
+                    // Получаем пользователя из БД по ID без пароля
+                    var repo = new UserRepository();
+                    var user = repo.GetUserById(lastId);
+
+                    if (user != null)
+                    {
+                        App.CurrentUser = user;
+                        NavigationService.Navigate(new MainPage());
+                    }
+                }
+            }
+        }
+
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             string identifier = LoginBox.Text.Trim();
@@ -47,6 +72,9 @@ namespace VmesteApp
                 // Сохраняем данные пользователя (например, в статический класс или свойство окна)
                 // чтобы приложение знало, кто вошел
                 App.CurrentUser = authenticatedUser;
+                Properties.Settings.Default.LastUserId = authenticatedUser.userId;
+                Properties.Settings.Default.LastUserName = authenticatedUser.name;
+                Properties.Settings.Default.Save();
 
                 CustomMessageBox.Show($"Добро пожаловать, {authenticatedUser.name}!", "Успех");
 

@@ -74,40 +74,18 @@ namespace VmesteApp
         // Продвинутая асинхронная проверка формы
         private async Task<(bool IsValid, string Error)> IsFormValidAsync()
         {
-            // Имя
-            if (string.IsNullOrWhiteSpace(NameBox.Text))
-                return (false, "Введите ваше полное имя");
-
-            // Почта: Продвинутый Regex
-            string email = EmailBox.Text.Trim();
-            string emailPattern = @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\|\}~w])*)(?<=[0-9a-z])@))" +
-                                  @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-0-9a-z]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$";
-
-            if (string.IsNullOrWhiteSpace(email) || !Regex.IsMatch(email, emailPattern, RegexOptions.IgnoreCase))
-                return (false, "Некорректный формат почты");
-
-            // Почта: Проверка существования домена
-            if (!await IsDomainValid(email))
-                return (false, "Указанный почтовый домен не существует или недоступен");
-
-            // Телефон
-            string phonePattern = @"^\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}$";
-            if (string.IsNullOrWhiteSpace(PhoneBox.Text) || !Regex.IsMatch(PhoneBox.Text, phonePattern))
-                return (false, "Введите номер телефона в формате: +7 (999) 000-00-00");
-
-            // Пароль
-            if (string.IsNullOrWhiteSpace(PassBox.Password) || PassBox.Password.Length < 6)
-                return (false, "Пароль должен содержать минимум 6 символов");
-
-            // Роль и код семьи
-            if (RoleComboBox.SelectedItem == null)
-                return (false, "Выберите вашу роль в семье");
+            var validator = new RegistrationValidator();
 
             string role = (RoleComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
-            if (role == "Участник семьи" && string.IsNullOrWhiteSpace(FamilyCodeBox.Text))
-                return (false, "Введите код семьи");
 
-            return (true, null);
+            return await validator.ValidateAsync(
+                NameBox.Text.Trim(),
+                EmailBox.Text.Trim(),
+                PhoneBox.Text.Trim(),
+                PassBox.Password,
+                role,
+                FamilyCodeBox.Text.Trim()
+            );
         }
 
         public async Task<bool> IsDomainValid(string email)
@@ -125,7 +103,6 @@ namespace VmesteApp
             }
         }
 
-        // --- Обработчики интерфейса (Маски и кнопки) ---
 
         private void RoleComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

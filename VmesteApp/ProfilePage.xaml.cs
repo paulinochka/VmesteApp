@@ -185,6 +185,6 @@ namespace VmesteApp
             UserPhoneTextBox.CaretIndex = result.Length;
         }
 
-        private void ChangeAvatarClick(object sender, RoutedEventArgs e) { /* ... ваш существующий код ... */ }
+        private void ChangeAvatarClick(object sender, RoutedEventArgs e) { }
     }
 }

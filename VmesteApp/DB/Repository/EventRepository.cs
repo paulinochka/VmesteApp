@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using VmesteApp.DB.Models;
+using VmesteApp.EventsModels;
 
 namespace VmesteApp.DB.Repository
 {
@@ -12,7 +13,6 @@ namespace VmesteApp.DB.Repository
         {
             List<Events> eventsList = new List<Events>();
 
-            // Используйте ваш метод получения соединения (например, Database.GetConnection())
             using (var conn = DbConnection.GetConnection())
             {
                 conn.Open();
@@ -92,5 +92,103 @@ namespace VmesteApp.DB.Repository
                 }
             }
         }
+
+        // Метод для получения ЗАДАЧ (события на сегодня)
+        public List<TaskItem> GetTasksForToday(int familyId, int currentUserId)
+        {
+            var tasks = new List<TaskItem>();
+
+            using (var conn = DbConnection.GetConnection())
+            {
+                conn.Open();
+                // Выбираем события, где дата равна сегодняшней
+                string sql = @"SELECT title FROM ""VmesteDB"".events 
+                       WHERE family_id = @fid 
+                       AND (is_private = false OR user_id = @uid)
+                       AND event_date = CURRENT_DATE
+                       ORDER BY event_time";
+
+                using (var cmd = new NpgsqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("fid", familyId);
+                    cmd.Parameters.AddWithValue("uid", currentUserId);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            tasks.Add(new TaskItem
+                            {
+                                TaskName = reader["title"].ToString()
+                            });
+                        }
+                    }
+                }
+            }
+            return tasks;
+        }
+
+        // Метод для получения БЛИЖАЙШИХ СОБЫТИЙ (все что после сегодня)
+        public List<EventItem> GetUpcomingEvents(int familyId, int currentUserId)
+        {
+            var events = new List<EventItem>();
+
+            using (var conn = DbConnection.GetConnection())
+            {
+                conn.Open();
+                // Выбираем события, дата которых больше сегодняшней
+                string sql = @"SELECT title, event_date, event_time, category FROM ""VmesteDB"".events 
+                       WHERE family_id = @fid 
+                       AND (is_private = false OR user_id = @uid)
+                       AND event_date > CURRENT_DATE
+                       ORDER BY event_date, event_time 
+                       LIMIT 5"; // Берем только ближайшие 5
+
+                using (var cmd = new NpgsqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("fid", familyId);
+                    cmd.Parameters.AddWithValue("uid", currentUserId);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            DateTime date = reader.GetDateTime(reader.GetOrdinal("event_date"));
+                            TimeSpan timeSpan = reader.GetFieldValue<TimeSpan>(reader.GetOrdinal("event_time"));
+                            DateTime time = DateTime.Today.Add(timeSpan);
+
+                            string category = reader["category"]?.ToString();
+
+                            events.Add(new EventItem
+                            {
+                                Title = reader["title"].ToString(),
+                                DateTimeString = $"{date:dd MMMM}, {time:HH:mm}",
+                                Icon = GetIconByCategory(category)
+                            });
+                        }
+                    }
+                }
+            }
+            return events;
+        }
+
+        private string GetIconByCategory(string category)
+{
+    if (category == null) return "📅";
+
+    switch (category.ToLower())
+    {
+        case "семья":
+            return "👨‍👩‍👧‍👦";
+        case "работа":
+            return "💼";
+        case "личное":
+            return "👤";
+        case "путешествие":
+            return "🌍";
+        default:
+            return "📅";
+    }
+}
     }
 }

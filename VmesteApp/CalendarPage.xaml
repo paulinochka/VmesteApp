@@ -48,12 +48,14 @@
                         <UniformGrid Columns="2" Margin="0,20,0,0">
                             <StackPanel Margin="0,0,15,0">
                                 <TextBlock Text="Дата" FontSize="12" Foreground="#999" Margin="0,0,0,5"/>
-                                <DatePicker x:Name="EventDatePicker" Padding="5" BorderBrush="#DDD"/>
+                                <DatePicker x:Name="EventDatePicker" Padding="5" BorderBrush="#DDD"
+                                            IsTodayHighlighted="True" SelectedDateFormat="Short"/>
                             </StackPanel>
 
                             <StackPanel Margin="15,0,0,0">
                                 <TextBlock Text="Время" FontSize="12" Foreground="#999" Margin="0,0,0,5"/>
-                                <TextBox x:Name="TimeBox" Text="12:00" Padding="10" BorderBrush="#DDD" ToolTip="Формат ЧЧ:ММ"/>
+                                <TextBox x:Name="TimeBox" Text="12:00" Padding="10" BorderBrush="#DDD" ToolTip="Формат ЧЧ:ММ" 
+                                         TextChanged="TimeBox_TextChanged"/>
                             </StackPanel>
                         </UniformGrid>
 

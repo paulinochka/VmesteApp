@@ -1,7 +1,8 @@
 ﻿<Page x:Class="VmesteApp.LoginPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      Title="Авторизация">
+      Title="Авторизация"
+      Loaded="Page_Loaded">
     
     <Border Background="#F5F5F7" CornerRadius="15" BorderBrush="#E0E0E0" BorderThickness="1">
         <Grid Background="Transparent">
